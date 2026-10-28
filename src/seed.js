@@ -70,7 +70,7 @@ export const SEED_DEBTS = [
     id: 'debt-seed-viva', creditor: 'Viva Finance', accountLabel: 'Personal loan',
     type: 'Installment loan', balance: 2830.32, regularPayment: null, amountDue: null, dueDate: null,
     status: 'current', settlement: drafted(),
-    notes: 'Portal checked Oct 27, 2026: loan Active, payoff balance $2,830.32, $500.00 paid to date. $3,000 proceeds received Sep 2026. Settlement letter drafted — not sent (it asks Viva to confirm payoff terms in writing).',
+    notes: 'Portal checked Oct 27, 2026: loan Active, payoff balance $2,830.32, $500.00 paid to date. $3,000 proceeds received Sep 2026. Paid by PAYROLL DEDUCTION (Zachariah, Oct 27, 2026) — serviced before his pay lands, so it needs no cash budgeting. Settlement letter drafted — not sent (it asks Viva to confirm payoff terms in writing).',
   },
   {
     id: 'debt-seed-cashhub', creditor: 'Cash Hub', accountLabel: 'Payday loan',
