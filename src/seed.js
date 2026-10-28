@@ -140,15 +140,15 @@ export const SEED_DEBTS = [
   },
   {
     id: 'debt-seed-camper', creditor: 'Community National Bank', accountLabel: 'Camper loan',
-    type: 'RV loan', balance: null, regularPayment: 400, amountDue: 312, dueDate: '2026-11-15',
+    type: 'RV loan', balance: 25310, regularPayment: 400, amountDue: 312, dueDate: '2026-11-15',
     status: 'past-due', settlement: null,
-    notes: 'Payroll allotment (Zachariah, Oct 27, 2026): due on the 15th monthly, $400/month, and currently $312 behind. Balance not yet known — the June 2026 bills sheet showed a $376 allotment on the 17th (stale). The camper is the RV in repair at Camping World. Confirm the balance and whether the allotment covers the payment.',
+    notes: 'Payroll allotment (Zachariah, Oct 27, 2026): due on the 15th monthly, $400/month, and currently $312 behind. Balance $25,310 confirmed by Zachariah Oct 27, 2026. The June 2026 bills sheet showed a $376 allotment on the 17th (stale). The camper is the RV in repair at Camping World. Still to confirm: whether the allotment covers the full payment — it is behind despite the allotment.',
   },
   {
-    id: 'debt-seed-sons-car', creditor: "Son's car loan", accountLabel: 'Auto loan — Zach pays half',
-    type: 'Auto loan', balance: null, regularPayment: null, amountDue: null, dueDate: null,
+    id: 'debt-seed-sons-car', creditor: 'Heartland Credit Union', accountLabel: "Damian's car — Zach pays half",
+    type: 'Auto loan', balance: 27679, regularPayment: 175, amountDue: null, dueDate: null,
     status: 'current', settlement: null,
-    notes: 'Payroll deduction (Zachariah, Oct 27, 2026): comes out of payroll automatically; Zachariah pays half of it. Lender, balance, and payment amount not yet known.',
+    notes: 'Payroll deduction (Zachariah, Oct 27, 2026): car loan for his son Damian at Heartland Credit Union. Zachariah pays half — $175 per pay period (full payment $350 per pay period). Balance $27,679 confirmed by Zachariah Oct 27, 2026. This is the "Heartland $300 (1st)" allotment from the June 2026 sheet — those figures are stale.',
   },
 ];
 

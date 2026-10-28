@@ -17,7 +17,7 @@ test('seed integrity: exactly 20 entries with unique keys', () => {
   assert.equal(new Set(SEED_DEBTS.map((d) => d.id)).size, 20);
 });
 
-test('seed integrity: known-balance sum is 259859.94', () => {
+test('seed integrity: known-balance sum is 312848.94', () => {
   const known = SEED_DEBTS.filter((d) => d.balance != null);
   const sum = debts.round2(known.reduce((a, d) => a + d.balance, 0));
   // 4296.24 + 4813.73 + 2684.39 + 92.12 + 760.50 (Cash Hub, portal
@@ -31,13 +31,15 @@ test('seed integrity: known-balance sum is 259859.94', () => {
   // loans, portal Oct 27, 2026)
   // + 194958.53 (SunWest mortgage, portal Oct 27, 2026)
   // + 268 (Credit One) + 482.50 (Verve) + 1056 (Afterpay)
-  // + 997 (Quantum credit card), reported Oct 27, 2026.
-  assert.equal(known.length, 18);
-  assert.equal(sum, 259859.94);
-  // Two balances are still unknown (camper, son's car) — null, never 0.
+  // + 997 (Quantum credit card), reported Oct 27, 2026
+  // + 25310 (camper, Community National Bank) + 27679 (Damian's car,
+  // Heartland Credit Union), reported Oct 27, 2026.
+  assert.equal(known.length, 20);
+  assert.equal(sum, 312848.94);
+  // No null balances remain — all 20 confirmed as of Oct 27, 2026.
   assert.deepEqual(
     SEED_DEBTS.filter((d) => d.balance == null).map((d) => d.creditor),
-    ['Community National Bank', "Son's car loan"],
+    [],
   );
 });
 

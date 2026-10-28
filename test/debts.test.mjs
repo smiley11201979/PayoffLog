@@ -31,10 +31,10 @@ test('totals: null balances excluded (never 0), paid debts excluded', () => {
   // Known balances: 4296.24 + 4813.73 + 2684.39 + 92.12 + 760.50 + 3120.66
   // + 13410 + 6500 + 1193 + 2366.90 + 2830.32 + 14349.26 + 5680.79
   // + 194958.53 (SunWest) + 268 (Credit One) + 482.50 (Verve)
-  // + 1056 (Afterpay) + 997 (Quantum card) — 18 of 20 confirmed; the
-  // camper and son's-car balances are null (unknown, never 0).
-  assert.equal(t.totalKnownBalance, 259859.94);
-  assert.equal(t.confirmedBalances, 18);
+  // + 1056 (Afterpay) + 997 (Quantum card) + 25310 (camper)
+  // + 27679 (Damian's car, Heartland). All 20 confirmed.
+  assert.equal(t.totalKnownBalance, 312848.94);
+  assert.equal(t.confirmedBalances, 20);
   // Amount due now: 2038.30 + 4813.73 + 869.20 + 1265.57 + 92.12 + 646.47
   // + 1493.12 + 212.08 (Spotloan) + 324.23 + 114.00 (Quantum CU loans,
   // due Nov 15 — active and current, so they count)
@@ -114,8 +114,8 @@ test('sort order: in-settlement, then past-due/defaulted by due date, then the r
     'Quantum Credit Union — Used Auto Loan — 520', // current, due Nov 15
     'Afterpay — Pay-in-4 plan', // current, no due date
     'Credit One — Visa — Card …8741', // current, no due date
+    "Heartland Credit Union — Damian's car — Zach pays half", // current, no due date
     'Quantum Credit Union — Credit Card', // current, no due date
-    "Son's car loan — Auto loan — Zach pays half", // current, no due date
     'SunWest Mortgage — Mortgage — Loan …0248', // forbearance, no due date
     'Viva Finance — Personal loan', // current, no due date
   ]);
