@@ -126,6 +126,12 @@ export const SEED_DEBTS = [
     status: 'current', settlement: null,
     notes: 'App checked Oct 27, 2026 (Verve Platinum Mastercard, issued by The Bancorp Bank): balance $482.50 on a $500 limit — only $17.00 available credit. Minimum payment due $0.00 for the Nov 5, 2026 cycle because a $75.00 Easy Pay payment was made Oct 27, 2026. Last statement balance $481.53. Auto Pay is OFF — payments are manual.',
   },
+  {
+    id: 'debt-seed-afterpay', creditor: 'Afterpay', accountLabel: 'Pay-in-4 plan',
+    type: 'Buy now, pay later', balance: 1056, regularPayment: null, amountDue: null, dueDate: null,
+    status: 'current', settlement: null,
+    notes: 'Balance reported by Zachariah Oct 27, 2026: $1,056 remaining. $1,385 in Afterpay payments were identified in the Oct 18, 2026 account review. Marked current — installment amounts, due dates, and payment status not yet captured; update from the Afterpay app.',
+  },
 ];
 
 export const seedKey = (d) => `${d.creditor}|${d.accountLabel}`;

@@ -11,13 +11,13 @@ const { SEED_DEBTS, seedKey, allSeedKeys, backfillSeeds } = mod;
 const debtsSrc = readFileSync(new URL('../src/debts.js', import.meta.url), 'utf8');
 const debts = await import('data:text/javascript;base64,' + Buffer.from(debtsSrc).toString('base64'));
 
-test('seed integrity: exactly 16 entries with unique keys', () => {
-  assert.equal(SEED_DEBTS.length, 16);
-  assert.equal(new Set(allSeedKeys()).size, 16);
-  assert.equal(new Set(SEED_DEBTS.map((d) => d.id)).size, 16);
+test('seed integrity: exactly 17 entries with unique keys', () => {
+  assert.equal(SEED_DEBTS.length, 17);
+  assert.equal(new Set(allSeedKeys()).size, 17);
+  assert.equal(new Set(SEED_DEBTS.map((d) => d.id)).size, 17);
 });
 
-test('seed integrity: known-balance sum is 257806.94', () => {
+test('seed integrity: known-balance sum is 258862.94', () => {
   const known = SEED_DEBTS.filter((d) => d.balance != null);
   const sum = debts.round2(known.reduce((a, d) => a + d.balance, 0));
   // 4296.24 + 4813.73 + 2684.39 + 92.12 + 760.50 (Cash Hub, portal
@@ -30,10 +30,11 @@ test('seed integrity: known-balance sum is 257806.94', () => {
   // + 14349.26 + 5680.79 (Quantum Credit Union auto + unsecured
   // loans, portal Oct 27, 2026)
   // + 194958.53 (SunWest mortgage, portal Oct 27, 2026)
-  // + 268 (Credit One) + 482.50 (Verve), reported Oct 27, 2026.
-  assert.equal(known.length, 16);
-  assert.equal(sum, 257806.94);
-  // No null balances remain — all 16 confirmed as of Oct 27, 2026.
+  // + 268 (Credit One) + 482.50 (Verve) + 1056 (Afterpay),
+  // reported Oct 27, 2026.
+  assert.equal(known.length, 17);
+  assert.equal(sum, 258862.94);
+  // No null balances remain — all 17 confirmed as of Oct 27, 2026.
   assert.deepEqual(
     SEED_DEBTS.filter((d) => d.balance == null).map((d) => d.creditor),
     [],
@@ -74,9 +75,9 @@ test('seed integrity: Cash Hub carries the Oct 27, 2026 portal figures', () => {
   assert.match(cashHub.notes, /RETURNED NSF/);
 });
 
-test('fresh install (no save): all 16 seed debts are offered', () => {
+test('fresh install (no save): all 17 seed debts are offered', () => {
   const out = backfillSeeds([], undefined);
-  assert.equal(out.debtsToAdd.length, 16);
+  assert.equal(out.debtsToAdd.length, 17);
   assert.deepEqual([...out.seededKeys].sort(), [...allSeedKeys()].sort());
 });
 
