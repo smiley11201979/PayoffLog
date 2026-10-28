@@ -30,14 +30,15 @@ test('totals: null balances excluded (never 0), paid debts excluded', () => {
   const t = summarizeDebts(seed, TODAY);
   // Known balances: 4296.24 + 4813.73 + 2684.39 + 92.12 + 760.50 + 3120.66
   // + 13410 + 6500 + 1193 + 2366.90 + 2830.32 + 14349.26 + 5680.79
-  // + 194958.53 (SunWest). All 14 balances are confirmed.
-  assert.equal(t.totalKnownBalance, 257056.44);
-  assert.equal(t.confirmedBalances, 14);
+  // + 194958.53 (SunWest) + 268 (Credit One) + 482.50 (Verve).
+  // All 16 balances are confirmed.
+  assert.equal(t.totalKnownBalance, 257806.94);
+  assert.equal(t.confirmedBalances, 16);
   // Amount due now: 2038.30 + 4813.73 + 869.20 + 1265.57 + 92.12 + 646.47
   // + 1493.12 + 212.08 (Spotloan) + 324.23 + 114.00 (Quantum CU loans,
   // due Nov 15 — active and current, so they count).
   assert.equal(t.totalDueNow, 11868.82);
-  assert.equal(t.activeCount, 14);
+  assert.equal(t.activeCount, 16);
 });
 
 test('totals: a null-balance debt adds nothing, not even a zero row', () => {
@@ -103,9 +104,11 @@ test('sort order: in-settlement, then past-due/defaulted by due date, then the r
     'Cash App Borrow — Borrow', // past due, no due date
     'LendNation — Online LOC', // past due, no due date
     'Snap Finance — Mattress lease — Factory Direct', // past due, no due date
+    'Verve — Platinum Mastercard — Card …2756', // current, due Nov 5
     'Spotloan — Installment loan', // current, due Nov 6
     'Quantum Credit Union — Unsecured Loan — 551', // current, due Nov 15
     'Quantum Credit Union — Used Auto Loan — 520', // current, due Nov 15
+    'Credit One — Visa — Card …8741', // current, no due date
     'SunWest Mortgage — Mortgage — Loan …0248', // forbearance, no due date
     'Viva Finance — Personal loan', // current, no due date
   ]);

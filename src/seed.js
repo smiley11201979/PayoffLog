@@ -114,6 +114,18 @@ export const SEED_DEBTS = [
     status: 'current', settlement: null,
     notes: 'Portal checked Oct 27, 2026: unsecured loan (account 551) — balance $5,680.79 on an original $10,100.00 loan; $114.00 due Nov 15, 2026. Added Oct 27, 2026; was not in the Past-Due Tracker.',
   },
+  {
+    id: 'debt-seed-creditone', creditor: 'Credit One', accountLabel: 'Visa — Card …8741',
+    type: 'Credit card', balance: 268, regularPayment: null, amountDue: null, dueDate: null,
+    status: 'current', settlement: null,
+    notes: 'Balance and limit reported by Zachariah Oct 27, 2026: $268 balance on a $300 credit limit (~$32 available). A $66.22 payment posted Oct 23, 2026. Marked current on the strength of that payment — minimum due and due date not yet confirmed; update from the next statement.',
+  },
+  {
+    id: 'debt-seed-verve', creditor: 'Verve', accountLabel: 'Platinum Mastercard — Card …2756',
+    type: 'Credit card', balance: 482.50, regularPayment: null, amountDue: 0, dueDate: '2026-11-05',
+    status: 'current', settlement: null,
+    notes: 'App checked Oct 27, 2026 (Verve Platinum Mastercard, issued by The Bancorp Bank): balance $482.50 on a $500 limit — only $17.00 available credit. Minimum payment due $0.00 for the Nov 5, 2026 cycle because a $75.00 Easy Pay payment was made Oct 27, 2026. Last statement balance $481.53. Auto Pay is OFF — payments are manual.',
+  },
 ];
 
 export const seedKey = (d) => `${d.creditor}|${d.accountLabel}`;
