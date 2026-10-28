@@ -31,14 +31,16 @@ test('totals: null balances excluded (never 0), paid debts excluded', () => {
   // Known balances: 4296.24 + 4813.73 + 2684.39 + 92.12 + 760.50 + 3120.66
   // + 13410 + 6500 + 1193 + 2366.90 + 2830.32 + 14349.26 + 5680.79
   // + 194958.53 (SunWest) + 268 (Credit One) + 482.50 (Verve)
-  // + 1056 (Afterpay) + 997 (Quantum card). All 18 confirmed.
+  // + 1056 (Afterpay) + 997 (Quantum card) — 18 of 20 confirmed; the
+  // camper and son's-car balances are null (unknown, never 0).
   assert.equal(t.totalKnownBalance, 259859.94);
   assert.equal(t.confirmedBalances, 18);
   // Amount due now: 2038.30 + 4813.73 + 869.20 + 1265.57 + 92.12 + 646.47
   // + 1493.12 + 212.08 (Spotloan) + 324.23 + 114.00 (Quantum CU loans,
-  // due Nov 15 — active and current, so they count).
-  assert.equal(t.totalDueNow, 11868.82);
-  assert.equal(t.activeCount, 18);
+  // due Nov 15 — active and current, so they count)
+  // + 312.00 (camper arrears — $312 behind, due now).
+  assert.equal(t.totalDueNow, 12180.82);
+  assert.equal(t.activeCount, 20);
 });
 
 test('totals: a null-balance debt adds nothing, not even a zero row', () => {
@@ -101,6 +103,7 @@ test('sort order: in-settlement, then past-due/defaulted by due date, then the r
     'Speedy Cash — Line of Credit …6764', // defaulted, due Oct 9
     'TitleMax — Line of Credit …1199', // defaulted, due Oct 23
     'GoodLeap — Windows Doors …9594', // past due, due Nov 3
+    'Community National Bank — Camper loan', // past due, $312 behind, due Nov 15
     'Advance America — Line of Credit …8925', // written off, no due date
     'Cash App Borrow — Borrow', // past due, no due date
     'LendNation — Online LOC', // past due, no due date
@@ -112,6 +115,7 @@ test('sort order: in-settlement, then past-due/defaulted by due date, then the r
     'Afterpay — Pay-in-4 plan', // current, no due date
     'Credit One — Visa — Card …8741', // current, no due date
     'Quantum Credit Union — Credit Card', // current, no due date
+    "Son's car loan — Auto loan — Zach pays half", // current, no due date
     'SunWest Mortgage — Mortgage — Loan …0248', // forbearance, no due date
     'Viva Finance — Personal loan', // current, no due date
   ]);

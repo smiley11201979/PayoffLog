@@ -138,6 +138,18 @@ export const SEED_DEBTS = [
     status: 'current', settlement: null,
     notes: 'Reported by Zachariah Oct 27, 2026: balance $997 on a $1,000 limit — only $3 available. No payment currently due. Third Quantum Credit Union account, alongside the used auto loan (520) and unsecured loan (551).',
   },
+  {
+    id: 'debt-seed-camper', creditor: 'Community National Bank', accountLabel: 'Camper loan',
+    type: 'RV loan', balance: null, regularPayment: 400, amountDue: 312, dueDate: '2026-11-15',
+    status: 'past-due', settlement: null,
+    notes: 'Payroll allotment (Zachariah, Oct 27, 2026): due on the 15th monthly, $400/month, and currently $312 behind. Balance not yet known — the June 2026 bills sheet showed a $376 allotment on the 17th (stale). The camper is the RV in repair at Camping World. Confirm the balance and whether the allotment covers the payment.',
+  },
+  {
+    id: 'debt-seed-sons-car', creditor: "Son's car loan", accountLabel: 'Auto loan — Zach pays half',
+    type: 'Auto loan', balance: null, regularPayment: null, amountDue: null, dueDate: null,
+    status: 'current', settlement: null,
+    notes: 'Payroll deduction (Zachariah, Oct 27, 2026): comes out of payroll automatically; Zachariah pays half of it. Lender, balance, and payment amount not yet known.',
+  },
 ];
 
 export const seedKey = (d) => `${d.creditor}|${d.accountLabel}`;

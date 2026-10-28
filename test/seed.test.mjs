@@ -11,10 +11,10 @@ const { SEED_DEBTS, seedKey, allSeedKeys, backfillSeeds } = mod;
 const debtsSrc = readFileSync(new URL('../src/debts.js', import.meta.url), 'utf8');
 const debts = await import('data:text/javascript;base64,' + Buffer.from(debtsSrc).toString('base64'));
 
-test('seed integrity: exactly 18 entries with unique keys', () => {
-  assert.equal(SEED_DEBTS.length, 18);
-  assert.equal(new Set(allSeedKeys()).size, 18);
-  assert.equal(new Set(SEED_DEBTS.map((d) => d.id)).size, 18);
+test('seed integrity: exactly 20 entries with unique keys', () => {
+  assert.equal(SEED_DEBTS.length, 20);
+  assert.equal(new Set(allSeedKeys()).size, 20);
+  assert.equal(new Set(SEED_DEBTS.map((d) => d.id)).size, 20);
 });
 
 test('seed integrity: known-balance sum is 259859.94', () => {
@@ -34,10 +34,10 @@ test('seed integrity: known-balance sum is 259859.94', () => {
   // + 997 (Quantum credit card), reported Oct 27, 2026.
   assert.equal(known.length, 18);
   assert.equal(sum, 259859.94);
-  // No null balances remain — all 18 confirmed as of Oct 27, 2026.
+  // Two balances are still unknown (camper, son's car) — null, never 0.
   assert.deepEqual(
     SEED_DEBTS.filter((d) => d.balance == null).map((d) => d.creditor),
-    [],
+    ['Community National Bank', "Son's car loan"],
   );
 });
 
@@ -75,9 +75,9 @@ test('seed integrity: Cash Hub carries the Oct 27, 2026 portal figures', () => {
   assert.match(cashHub.notes, /RETURNED NSF/);
 });
 
-test('fresh install (no save): all 18 seed debts are offered', () => {
+test('fresh install (no save): all 20 seed debts are offered', () => {
   const out = backfillSeeds([], undefined);
-  assert.equal(out.debtsToAdd.length, 18);
+  assert.equal(out.debtsToAdd.length, 20);
   assert.deepEqual([...out.seededKeys].sort(), [...allSeedKeys()].sort());
 });
 
