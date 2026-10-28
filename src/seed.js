@@ -130,7 +130,7 @@ export const SEED_DEBTS = [
     id: 'debt-seed-afterpay', creditor: 'Afterpay', accountLabel: 'Pay-in-4 plan',
     type: 'Buy now, pay later', balance: 1056, regularPayment: null, amountDue: null, dueDate: null,
     status: 'current', settlement: null,
-    notes: 'Balance reported by Zachariah Oct 27, 2026: $1,056 remaining. $1,385 in Afterpay payments were identified in the Oct 18, 2026 account review. Marked current — installment amounts, due dates, and payment status not yet captured; update from the Afterpay app.',
+    notes: 'Balance reported by Zachariah Oct 27, 2026: $1,056 remaining on a $2,500 Afterpay limit. He pays differing amounts weekly — no fixed installment amount. $1,385 in Afterpay payments were identified in the Oct 18, 2026 account review. Marked current — exact installment due dates not captured; update from the Afterpay app.',
   },
 ];
 
