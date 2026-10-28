@@ -132,6 +132,12 @@ export const SEED_DEBTS = [
     status: 'current', settlement: null,
     notes: 'Balance reported by Zachariah Oct 27, 2026: $1,056 remaining on a $2,500 Afterpay limit. He pays differing amounts weekly — no fixed installment amount. $1,385 in Afterpay payments were identified in the Oct 18, 2026 account review. Marked current — exact installment due dates not captured; update from the Afterpay app.',
   },
+  {
+    id: 'debt-seed-quantum-card', creditor: 'Quantum Credit Union', accountLabel: 'Credit Card',
+    type: 'Credit card', balance: 997, regularPayment: null, amountDue: 0, dueDate: null,
+    status: 'current', settlement: null,
+    notes: 'Reported by Zachariah Oct 27, 2026: balance $997 on a $1,000 limit — only $3 available. No payment currently due. Third Quantum Credit Union account, alongside the used auto loan (520) and unsecured loan (551).',
+  },
 ];
 
 export const seedKey = (d) => `${d.creditor}|${d.accountLabel}`;
