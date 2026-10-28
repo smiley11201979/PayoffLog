@@ -86,8 +86,9 @@ test('do-not-pay flag: offer sent without a written agreement', () => {
 
 test('active settlements counts live negotiations only', () => {
   const t = summarizeDebts(seed, TODAY);
-  // Only the Speedy title loan is at offer-sent; the seven drafted
-  // letters are pipeline, not active settlements.
+  // Only the Speedy title loan is at offer-sent; the six drafted
+  // letters are pipeline, not active settlements. (Viva's drafted
+  // letter was marked moot Oct 27, 2026 — payroll-paid loan.)
   assert.equal(t.activeSettlements, 1);
   assert.equal(t.doNotPayCount, 1);
 });
