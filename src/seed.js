@@ -122,9 +122,9 @@ export const SEED_DEBTS = [
   },
   {
     id: 'debt-seed-verve', creditor: 'Verve', accountLabel: 'Platinum Mastercard — Card …2756',
-    type: 'Credit card', balance: 482.50, regularPayment: null, amountDue: 0, dueDate: '2026-11-05',
+    type: 'Credit card', balance: 482.50, regularPayment: null, amountDue: 45, dueDate: '2026-11-05',
     status: 'current', settlement: null,
-    notes: 'App checked Oct 27, 2026 (Verve Platinum Mastercard, issued by The Bancorp Bank): balance $482.50 on a $500 limit — only $17.00 available credit. Minimum payment due $0.00 for the Nov 5, 2026 cycle because a $75.00 Easy Pay payment was made Oct 27, 2026. Last statement balance $481.53. Auto Pay is OFF — payments are manual.',
+    notes: 'App checked Oct 27, 2026 (Verve Platinum Mastercard, issued by The Bancorp Bank): balance $482.50 on a $500 limit — only $17.00 available credit. Last statement balance $481.53. Auto Pay is OFF — payments are manual. UPDATED Oct 29, 2026: the $75.00 Easy Pay payment made Oct 27 was RETURNED UNPAID and reversed (Continental Finance email Oct 29) — the second failed $75 payment in four days — so the November minimum is $45.00 due Nov 5, 2026 (confirmed by Zachariah from the app Oct 29). "Continental Finance" and this Verve card are the SAME obligation (Zachariah, Oct 29, 2026); his payment pattern runs ~$83/mo. No returned-payment/late fee confirmed yet.',
   },
   {
     id: 'debt-seed-onepay', creditor: 'OnePay', accountLabel: 'Card',

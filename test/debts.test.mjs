@@ -39,8 +39,10 @@ test('totals: null balances excluded (never 0), paid debts excluded', () => {
   // Amount due now: 2038.30 + 4813.73 + 869.20 + 1265.57 + 93.98 + 646.47
   // + 1493.12 + 212.08 (Spotloan) + 324.23 + 114.00 (Quantum CU loans,
   // due Nov 15 — active and current, so they count)
-  // + 312.00 (camper arrears — $312 behind, due now).
-  assert.equal(t.totalDueNow, 12182.68);
+  // + 312.00 (camper arrears — $312 behind, due now)
+  // + 45.00 (Verve November minimum due Nov 5, 2026 — restored after
+  // the Oct 27 $75 payment was returned unpaid, confirmed Oct 29, 2026).
+  assert.equal(t.totalDueNow, 12227.68);
   assert.equal(t.activeCount, 21);
 });
 
