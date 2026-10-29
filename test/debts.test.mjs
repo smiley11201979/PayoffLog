@@ -28,19 +28,20 @@ test('formatMoney renders dollars with 2 decimals and grouping', () => {
 
 test('totals: null balances excluded (never 0), paid debts excluded', () => {
   const t = summarizeDebts(seed, TODAY);
-  // Known balances: 4296.24 + 4813.73 + 2684.39 + 92.12 + 760.50 + 3120.66
+  // Known balances: 4296.24 + 4813.73 + 2684.39 + 708.71 + 760.50 + 3120.66
   // + 13410 + 6500 + 1193 + 2366.90 + 2830.32 + 14349.26 + 5680.79
   // + 194958.53 (SunWest) + 268 (Credit One) + 482.50 (Verve)
   // + 1056 (Afterpay) + 997 (Quantum card) + 25310 (camper)
-  // + 27679 (Damian's car, Heartland). All 20 confirmed.
-  assert.equal(t.totalKnownBalance, 312848.94);
-  assert.equal(t.confirmedBalances, 20);
-  // Amount due now: 2038.30 + 4813.73 + 869.20 + 1265.57 + 92.12 + 646.47
+  // + 27679 (Damian's car, Heartland) + 388.21 (OnePay, Oct 29, 2026).
+  // All 21 confirmed.
+  assert.equal(t.totalKnownBalance, 313853.74);
+  assert.equal(t.confirmedBalances, 21);
+  // Amount due now: 2038.30 + 4813.73 + 869.20 + 1265.57 + 93.98 + 646.47
   // + 1493.12 + 212.08 (Spotloan) + 324.23 + 114.00 (Quantum CU loans,
   // due Nov 15 — active and current, so they count)
   // + 312.00 (camper arrears — $312 behind, due now).
-  assert.equal(t.totalDueNow, 12180.82);
-  assert.equal(t.activeCount, 20);
+  assert.equal(t.totalDueNow, 12182.68);
+  assert.equal(t.activeCount, 21);
 });
 
 test('totals: a null-balance debt adds nothing, not even a zero row', () => {
@@ -54,9 +55,10 @@ test('totals: a null-balance debt adds nothing, not even a zero row', () => {
 
 test('due within 7 days and overdue, against a fixed today', () => {
   const t = summarizeDebts(seed, TODAY);
-  // Inside the 7-day window: the Speedy Cash title loan (Oct 28) and
+  // Inside the 7-day window: the Speedy Cash title loan (Oct 28),
+  // OnePay (Nov 1 — current, $0 due now, regular $29.85 payment), and
   // GoodLeap (Nov 3 — exactly 7 days out, $646.47 total due).
-  assert.equal(t.dueSoonCount, 2);
+  assert.equal(t.dueSoonCount, 3);
   // Overdue: Cash Hub (Jul 17), Speedy LOC (Oct 9), TitleMax (Oct 23).
   // Spotloan (due Nov 6, current) is neither overdue nor inside the
   // 7-day window, and Advance America is written off with no due date.
@@ -108,6 +110,7 @@ test('sort order: in-settlement, then past-due/defaulted by due date, then the r
     'Cash App Borrow — Borrow', // past due, no due date
     'LendNation — Online LOC', // past due, no due date
     'Snap Finance — Mattress lease — Factory Direct', // past due, no due date
+    'OnePay — Card', // current, due Nov 1
     'Verve — Platinum Mastercard — Card …2756', // current, due Nov 5
     'Spotloan — Installment loan', // current, due Nov 6
     'Quantum Credit Union — Unsecured Loan — 551', // current, due Nov 15

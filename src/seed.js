@@ -62,9 +62,9 @@ export const SEED_DEBTS = [
   },
   {
     id: 'debt-seed-cashapp', creditor: 'Cash App Borrow', accountLabel: 'Borrow',
-    type: 'Other', balance: 92.12, regularPayment: null, amountDue: 92.12, dueDate: null,
+    type: 'Other', balance: 708.71, regularPayment: null, amountDue: 93.98, dueDate: null,
     status: 'past-due', settlement: drafted(),
-    notes: 'Small overdue balance. Letter drafted — not sent.',
+    notes: 'THREE separate loans, confirmed by Zachariah from his app Oct 29, 2026: $93.98 + $269.85 + $344.88 = $708.71 total — kept as a single PayoffLog entry at his direction (Oct 29, 2026). Loan 1 ($93.98) is the overdue one; the $92.12 figure carried before was only loan 1\'s overdue repayment, not the whole Borrow balance. The $20 auto-application Oct 29, 2026 (Jan Perez mask-sale money) went to the $344.88 loan (was $364.88). Another $0.93 interest charge on loan 1 due to land Oct 30, 2026. Letter drafted — not sent (updated to the three-loan structure). NOTE for the installed app: seed values never overwrite an existing on-phone entry, so Zachariah edits this entry\'s balance to $708.71 by hand in the app.',
   },
   {
     id: 'debt-seed-viva', creditor: 'Viva Finance', accountLabel: 'Personal loan',
@@ -125,6 +125,12 @@ export const SEED_DEBTS = [
     type: 'Credit card', balance: 482.50, regularPayment: null, amountDue: 0, dueDate: '2026-11-05',
     status: 'current', settlement: null,
     notes: 'App checked Oct 27, 2026 (Verve Platinum Mastercard, issued by The Bancorp Bank): balance $482.50 on a $500 limit — only $17.00 available credit. Minimum payment due $0.00 for the Nov 5, 2026 cycle because a $75.00 Easy Pay payment was made Oct 27, 2026. Last statement balance $481.53. Auto Pay is OFF — payments are manual.',
+  },
+  {
+    id: 'debt-seed-onepay', creditor: 'OnePay', accountLabel: 'Card',
+    type: 'Credit card', balance: 388.21, regularPayment: 29.85, amountDue: 0, dueDate: '2026-11-01',
+    status: 'current', settlement: null,
+    notes: 'Reported by Zachariah Oct 29, 2026: balance $388.21, monthly payment $29.85 due on the 1st, current / up to date — $0 past due. This one was missed when the board was first built; added Oct 29, 2026 as the 21st debt. Credit limit not reported.',
   },
   {
     id: 'debt-seed-afterpay', creditor: 'Afterpay', accountLabel: 'Pay-in-4 plan',

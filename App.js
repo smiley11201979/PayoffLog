@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Platform, SafeAreaView, ScrollView, StatusBar, Text, TextInput,
   TouchableOpacity, View,
@@ -163,6 +163,23 @@ export default function App() {
   const sorted = useMemo(() => sortDebts(data.debts), [data.debts]);
   const flagged = useMemo(() => doNotPayDebts(data.debts), [data.debts]);
 
+  // Edit-form focus (bug reported by Zachariah Oct 29, 2026): the form
+  // renders above the debt list, but nothing scrolled to it, so tapping
+  // Edit down in the list appeared to do nothing. Keep a ScrollView ref
+  // plus the form card's measured Y, and scroll to it whenever a form
+  // opens. These hooks MUST stay above the isLoaded early return below
+  // (hooks-order rule — see Hub Helper v1.3.2's crash).
+  const scrollRef = useRef(null);
+  const formY = useRef(0);
+  const formOpenKey = form ? `${form.mode}:${form.id || 'new'}` : null;
+  useEffect(() => {
+    if (!formOpenKey) return;
+    const t = setTimeout(() => {
+      scrollRef.current?.scrollTo({ y: Math.max(0, formY.current - 8), animated: true });
+    }, 60);
+    return () => clearTimeout(t);
+  }, [formOpenKey]);
+
   if (!data.isLoaded) return <View style={{ flex: 1, backgroundColor: BG }} />;
 
   const rootStyle = {
@@ -248,7 +265,7 @@ export default function App() {
     <SafeAreaView style={rootStyle}>
       <StatusBar barStyle="light-content" backgroundColor={BG} />
       <View style={{ flex: 1, minHeight: 0 }}>
-        <ScrollView contentContainerStyle={{ paddingBottom: 28 }}>
+        <ScrollView ref={scrollRef} contentContainerStyle={{ paddingBottom: 28 }}>
 
           {/* HEADER */}
           <View style={{ paddingHorizontal: 14, paddingTop: 18 }}>
@@ -303,7 +320,7 @@ export default function App() {
 
           {/* ADD / EDIT FORM */}
           {form ? (
-            <View style={s.card}>
+            <View style={s.card} onLayout={(e) => { formY.current = e.nativeEvent.layout.y; }}>
               <Text style={s.cardTitle}>{form.mode === 'edit' ? '✏️ EDIT DEBT' : '➕ ADD DEBT'}</Text>
 
               <Text style={s.label}>CREDITOR</Text>

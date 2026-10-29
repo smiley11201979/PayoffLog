@@ -11,16 +11,18 @@ const { SEED_DEBTS, seedKey, allSeedKeys, backfillSeeds } = mod;
 const debtsSrc = readFileSync(new URL('../src/debts.js', import.meta.url), 'utf8');
 const debts = await import('data:text/javascript;base64,' + Buffer.from(debtsSrc).toString('base64'));
 
-test('seed integrity: exactly 20 entries with unique keys', () => {
-  assert.equal(SEED_DEBTS.length, 20);
-  assert.equal(new Set(allSeedKeys()).size, 20);
-  assert.equal(new Set(SEED_DEBTS.map((d) => d.id)).size, 20);
+test('seed integrity: exactly 21 entries with unique keys', () => {
+  assert.equal(SEED_DEBTS.length, 21);
+  assert.equal(new Set(allSeedKeys()).size, 21);
+  assert.equal(new Set(SEED_DEBTS.map((d) => d.id)).size, 21);
 });
 
-test('seed integrity: known-balance sum is 312848.94', () => {
+test('seed integrity: known-balance sum is 313853.74', () => {
   const known = SEED_DEBTS.filter((d) => d.balance != null);
   const sum = debts.round2(known.reduce((a, d) => a + d.balance, 0));
-  // 4296.24 + 4813.73 + 2684.39 + 92.12 + 760.50 (Cash Hub, portal
+  // 4296.24 + 4813.73 + 2684.39 + 708.71 (Cash App Borrow — three
+  // loans $93.98 + $269.85 + $344.88, per Zachariah's app Oct 29,
+  // 2026, kept as one entry at his direction) + 760.50 (Cash Hub, portal
   // figure Oct 27, 2026 — replaces the stale June $940) + 3120.66
   // (LendNation, portal Oct 27, 2026 — June figure was $1,724) + 13410
   // + 6500 (Snap — early purchase price, Oct 27, 2026; the full-term
@@ -33,10 +35,14 @@ test('seed integrity: known-balance sum is 312848.94', () => {
   // + 268 (Credit One) + 482.50 (Verve) + 1056 (Afterpay)
   // + 997 (Quantum credit card), reported Oct 27, 2026
   // + 25310 (camper, Community National Bank) + 27679 (Damian's car,
-  // Heartland Credit Union), reported Oct 27, 2026.
-  assert.equal(known.length, 20);
-  assert.equal(sum, 312848.94);
-  // No null balances remain — all 20 confirmed as of Oct 27, 2026.
+  // Heartland Credit Union), reported Oct 27, 2026
+  // + 388.21 (OnePay, reported by Zachariah Oct 29, 2026 — balance
+  // $388.21, $29.85/mo due on the 1st, current; missed in the
+  // original build). This seed sum now MATCHES the $313,853.74
+  // debt-board total exactly (Cash App corrected Oct 29, 2026).
+  assert.equal(known.length, 21);
+  assert.equal(sum, 313853.74);
+  // No null balances remain — all 21 confirmed (20 as of Oct 27, 2026, plus OnePay Oct 29, 2026).
   assert.deepEqual(
     SEED_DEBTS.filter((d) => d.balance == null).map((d) => d.creditor),
     [],
@@ -77,9 +83,9 @@ test('seed integrity: Cash Hub carries the Oct 27, 2026 portal figures', () => {
   assert.match(cashHub.notes, /RETURNED NSF/);
 });
 
-test('fresh install (no save): all 20 seed debts are offered', () => {
+test('fresh install (no save): all 21 seed debts are offered', () => {
   const out = backfillSeeds([], undefined);
-  assert.equal(out.debtsToAdd.length, 20);
+  assert.equal(out.debtsToAdd.length, 21);
   assert.deepEqual([...out.seededKeys].sort(), [...allSeedKeys()].sort());
 });
 
