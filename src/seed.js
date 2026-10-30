@@ -99,8 +99,13 @@ export const SEED_DEBTS = [
   {
     id: 'debt-seed-snap', creditor: 'Snap Finance', accountLabel: 'Mattress lease — Factory Direct',
     type: 'Other', balance: 6500, regularPayment: 246.56, amountDue: 1493.12, dueDate: null,
-    status: 'past-due', settlement: null,
-    notes: 'Portal checked Oct 27, 2026: lease-to-own at Factory Direct Mattress, Application 2510310TN2KS. PAST DUE $1,493.12 (about 6 payments). Balance shown is the EARLY PURCHASE price — $6,500 to own it outright now (confirmed by Zachariah Oct 27, 2026). Maximum Term Option ends Nov 22, 2027: 29 renewable lease periods at $246.56, total of payments $9,615.51 if it runs the full term. Payments shown: May 22 and Jun 5, 2026 ($246.56 each). Skipped for SETTLEMENT by choice (Oct 18, 2026) — tracked here for payments.',
+    status: 'in-settlement',
+    settlement: {
+      stage: 'offer-sent', offerAmount: 4224.08, offerSentDate: '2026-10-29',
+      agreementDeadline: null, payDate: null,
+      writtenAgreement: false, lienReleaseRequired: false, lienReleaseConfirmed: false,
+    },
+    notes: 'Portal checked Oct 27, 2026: lease-to-own at Factory Direct Mattress, Application 2510310TN2KS. PAST DUE $1,493.12 (about 6 payments). Balance shown is the EARLY PURCHASE price — $6,500 to own it outright now (confirmed by Zachariah Oct 27, 2026); Snap\'s own emailed ledger (Oct 29, 2026) shows $8,149.91 after the Oct 2 payment. Maximum Term Option ends Nov 22, 2027: 29 renewable lease periods at $246.56, total of payments $9,615.51 if it runs the full term. SETTLEMENT OFFER — made BY Snap Finance on Oct 29, 2026 (the offer amount/date in the Settlement section are Snap\'s proposal, not Zachariah\'s): $4,224.08 total = $528.01 "today" + 7 × $528.01 starting Nov 6, 2026 (8 × $528.01); payment FREQUENCY (biweekly vs monthly) NOT stated, and Snap named "card 6813 on file" — that card is on a CLOSED account. Snap confirmed Oct 29 that all three card payments ($765.92 total) were received, the $20 ledger entries are returned-payment fees, and it will not pull from the closed bank account. Zachariah replied Oct 29, 2026: do NOT charge card 6813, and no working payment method until Snap provides the COMPLETE terms in writing (exact dates + frequency for every payment, confirmation that $4,224.08 settles the lease in full with a $0 balance and the account closed as settled, and how the mattress is treated at completion). Awaiting Snap\'s answer — DO NOT PAY until those terms are in writing. NOTE for the installed app: seed values never overwrite an existing on-phone entry, so Zachariah enters this by hand in the app: Edit → Settlement stage OFFER SENT → Offer Amount 4224.08.',
   },
   {
     id: 'debt-seed-quantum-auto', creditor: 'Quantum Credit Union', accountLabel: 'Used Auto Loan — 520',

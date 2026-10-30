@@ -63,6 +63,21 @@ test('seed integrity: Speedy Cash title loan sits at offer-sent with NO written 
   assert.equal(debts.doNotPay(debts.normalizeDebt(title)), true);
 });
 
+test('seed integrity: Snap Finance carries Snap\'s Oct 29, 2026 settlement proposal — NOT accepted, NOT payable', () => {
+  const snap = SEED_DEBTS.find((d) => d.creditor === 'Snap Finance');
+  assert.equal(snap.status, 'in-settlement');
+  assert.equal(snap.balance, 6500); // board figure stays the early purchase price
+  assert.equal(snap.settlement.stage, 'offer-sent');
+  assert.equal(snap.settlement.offerAmount, 4224.08); // 8 × $528.01, proposed BY Snap
+  assert.equal(snap.settlement.offerSentDate, '2026-10-29');
+  assert.equal(snap.settlement.payDate, null); // NOT agreed — terms incomplete
+  assert.equal(snap.settlement.writtenAgreement, false);
+  // No written agreement on file → the DO NOT PAY protection must flag it.
+  assert.equal(debts.doNotPay(debts.normalizeDebt(snap)), true);
+  assert.match(snap.notes, /FREQUENCY \(biweekly vs monthly\) NOT stated/);
+  assert.match(snap.notes, /CLOSED account/);
+});
+
 test('seed integrity: Spotloan is active and current — NOT closed, NOT paid', () => {
   const spotloan = SEED_DEBTS.find((d) => d.creditor === 'Spotloan');
   assert.equal(spotloan.status, 'current'); // corrected Oct 27, 2026

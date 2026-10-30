@@ -78,7 +78,12 @@ test('do-not-pay flag: offer sent without a written agreement', () => {
   assert.equal(title.settlement.stage, 'offer-sent');
   assert.equal(title.settlement.writtenAgreement, false);
   assert.equal(doNotPay(title), true);
-  assert.deepEqual(doNotPayDebts(seed).map((d) => d.id), [title.id]);
+  // Snap Finance joined the flagged list Oct 29, 2026: Snap proposed
+  // $4,224.08 in writing but with incomplete terms (no frequency) and a
+  // closed-account card named — not payable until full terms arrive.
+  const snap = byLabel('Mattress lease — Factory Direct');
+  assert.equal(doNotPay(snap), true);
+  assert.deepEqual(doNotPayDebts(seed).map((d) => d.id), [title.id, snap.id]);
 
   // Recording the written agreement clears the flag…
   assert.equal(doNotPay({ ...title, settlement: { ...title.settlement, writtenAgreement: true } }), false);
@@ -92,17 +97,20 @@ test('do-not-pay flag: offer sent without a written agreement', () => {
 
 test('active settlements counts live negotiations only', () => {
   const t = summarizeDebts(seed, TODAY);
-  // Only the Speedy title loan is at offer-sent; the six drafted
-  // letters are pipeline, not active settlements. (Viva's drafted
-  // letter was marked moot Oct 27, 2026 — payroll-paid loan.)
-  assert.equal(t.activeSettlements, 1);
-  assert.equal(t.doNotPayCount, 1);
+  // Two live items at offer-sent: the Speedy title loan (Zachariah's
+  // offer) and Snap Finance (Snap's Oct 29, 2026 proposal, terms
+  // incomplete — also flagged do-not-pay). The six drafted letters
+  // are pipeline, not active settlements. (Viva's drafted letter was
+  // marked moot Oct 27, 2026 — payroll-paid loan.)
+  assert.equal(t.activeSettlements, 2);
+  assert.equal(t.doNotPayCount, 2);
 });
 
 test('sort order: in-settlement, then past-due/defaulted by due date, then the rest by due date', () => {
   const order = sortDebts(seed).map((d) => `${d.creditor} — ${d.accountLabel}`);
   assert.deepEqual(order, [
-    'Speedy Cash — Title Loan …4254', // in settlement
+    'Speedy Cash — Title Loan …4254', // in settlement, due Oct 28
+    'Snap Finance — Mattress lease — Factory Direct', // in settlement since Snap's Oct 29, 2026 proposal, no due date
     'Cash Hub — Payday loan', // past due, due Jul 17
     'Speedy Cash — Line of Credit …6764', // defaulted, due Oct 9
     'TitleMax — Line of Credit …1199', // defaulted, due Oct 23
@@ -111,7 +119,6 @@ test('sort order: in-settlement, then past-due/defaulted by due date, then the r
     'Advance America — Line of Credit …8925', // written off, no due date
     'Cash App Borrow — Borrow', // past due, no due date
     'LendNation — Online LOC', // past due, no due date
-    'Snap Finance — Mattress lease — Factory Direct', // past due, no due date
     'OnePay — Card', // current, due Nov 1
     'Verve — Platinum Mastercard — Card …2756', // current, due Nov 5
     'Spotloan — Installment loan', // current, due Nov 6

@@ -165,19 +165,29 @@ export default function App() {
 
   // Edit-form focus (bug reported by Zachariah Oct 29, 2026): the form
   // renders above the debt list, but nothing scrolled to it, so tapping
-  // Edit down in the list appeared to do nothing. Keep a ScrollView ref
-  // plus the form card's measured Y, and scroll to it whenever a form
-  // opens. These hooks MUST stay above the isLoaded early return below
+  // Edit down in the list appeared to do nothing.
+  // v1.0.1's fix — a single scroll 60ms after the form opened — did NOT
+  // land on Zachariah's phone (he reported that night that Edit still
+  // didn't snap to the form): that timer can fire before the form card's
+  // onLayout has updated formY, so it scrolls to the stale position (0
+  // on first open). v1.0.2 hardens it two ways: retry the scroll on
+  // several delays so at least one attempt uses the real measured Y,
+  // AND trigger a scroll from the form card's own onLayout (guarded to
+  // once per form opening, so editing never yanks the view back).
+  // These hooks MUST stay above the isLoaded early return below
   // (hooks-order rule — see Hub Helper v1.3.2's crash).
   const scrollRef = useRef(null);
   const formY = useRef(0);
+  const scrolledForKey = useRef(null);
   const formOpenKey = form ? `${form.mode}:${form.id || 'new'}` : null;
+  const scrollToForm = () => {
+    scrollRef.current?.scrollTo({ y: Math.max(0, formY.current - 8), animated: true });
+  };
   useEffect(() => {
-    if (!formOpenKey) return;
-    const t = setTimeout(() => {
-      scrollRef.current?.scrollTo({ y: Math.max(0, formY.current - 8), animated: true });
-    }, 60);
-    return () => clearTimeout(t);
+    if (!formOpenKey) { scrolledForKey.current = null; return undefined; }
+    const timers = [60, 200, 450, 800].map((ms) => setTimeout(scrollToForm, ms));
+    return () => timers.forEach(clearTimeout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formOpenKey]);
 
   if (!data.isLoaded) return <View style={{ flex: 1, backgroundColor: BG }} />;
@@ -320,7 +330,19 @@ export default function App() {
 
           {/* ADD / EDIT FORM */}
           {form ? (
-            <View style={s.card} onLayout={(e) => { formY.current = e.nativeEvent.layout.y; }}>
+            <View
+              style={s.card}
+              onLayout={(e) => {
+                formY.current = e.nativeEvent.layout.y;
+                // The layout pass knows the form's real Y — scroll from
+                // here too (once per opening) so the scroll never races
+                // ahead of the measurement, v1.0.1's failure mode.
+                if (formOpenKey && scrolledForKey.current !== formOpenKey) {
+                  scrolledForKey.current = formOpenKey;
+                  setTimeout(scrollToForm, 50);
+                }
+              }}
+            >
               <Text style={s.cardTitle}>{form.mode === 'edit' ? '✏️ EDIT DEBT' : '➕ ADD DEBT'}</Text>
 
               <Text style={s.label}>CREDITOR</Text>
