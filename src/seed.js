@@ -139,9 +139,9 @@ export const SEED_DEBTS = [
   },
   {
     id: 'debt-seed-afterpay', creditor: 'Afterpay', accountLabel: 'Pay-in-4 plan',
-    type: 'Buy now, pay later', balance: 1056, regularPayment: null, amountDue: null, dueDate: null,
+    type: 'Buy now, pay later', balance: 704.50, regularPayment: null, amountDue: null, dueDate: null,
     status: 'current', settlement: null,
-    notes: 'Balance reported by Zachariah Oct 27, 2026: $1,056 remaining on a $2,500 Afterpay limit. He pays differing amounts weekly — no fixed installment amount. $1,385 in Afterpay payments were identified in the Oct 18, 2026 account review. Marked current — exact installment due dates not captured; update from the Afterpay app.',
+    notes: 'Remaining balance $704.50 — marked down Oct 29, 2026 at Zachariah\'s direction so the total reflects tonight. Reconciliation: the full installment schedule from his app screenshots (Oct 28, 2026) totals $1,057.37 (≈ the $1,056 balance he reported Oct 27, 2026, on a $2,500 limit); on Oct 28, 2026 he paid $352.87 — $306.78 prepaid toward the pay-in-4 orders (covering Nov 1\'s $260.69 in full, the extra $46.09 applying forward) plus the $46.09 Sam\'s Club Pay-in-12 installment (4 of 12) paid separately — leaving $704.50. Remaining: pay-in-4 $335.78 (Nov 8 ≈$42.25, Nov 15 $169.89, Nov 22 $32.50, Nov 29 $91.14 — every pay-in-4 order ends Nov 29, 2026; nothing is due until Nov 8) plus Sam\'s Club Pay-in-12 $368.72 (8 × $46.09 monthly, Nov 30, 2026 through ~Jun 2027). Standing condition: no new Afterpay orders. NOTE for the installed app: seed values never overwrite an existing on-phone entry, so Zachariah edits this entry\'s balance to $704.50 by hand in the app.',
   },
   {
     id: 'debt-seed-quantum-card', creditor: 'Quantum Credit Union', accountLabel: 'Credit Card',

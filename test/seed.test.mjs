@@ -17,7 +17,7 @@ test('seed integrity: exactly 21 entries with unique keys', () => {
   assert.equal(new Set(SEED_DEBTS.map((d) => d.id)).size, 21);
 });
 
-test('seed integrity: known-balance sum is 313853.74', () => {
+test('seed integrity: known-balance sum is 313502.24', () => {
   const known = SEED_DEBTS.filter((d) => d.balance != null);
   const sum = debts.round2(known.reduce((a, d) => a + d.balance, 0));
   // 4296.24 + 4813.73 + 2684.39 + 708.71 (Cash App Borrow — three
@@ -32,16 +32,21 @@ test('seed integrity: known-balance sum is 313853.74', () => {
   // + 14349.26 + 5680.79 (Quantum Credit Union auto + unsecured
   // loans, portal Oct 27, 2026)
   // + 194958.53 (SunWest mortgage, portal Oct 27, 2026)
-  // + 268 (Credit One) + 482.50 (Verve) + 1056 (Afterpay)
+  // + 268 (Credit One) + 482.50 (Verve), reported Oct 27, 2026
+  // + 704.50 (Afterpay remaining — the $1,056 balance reported
+  // Oct 27, 2026 reconciled to a $1,057.37 installment schedule,
+  // less the $352.87 Zachariah paid Oct 28, 2026; marked down
+  // Oct 29, 2026 at his direction so the total reflects tonight)
   // + 997 (Quantum credit card), reported Oct 27, 2026
   // + 25310 (camper, Community National Bank) + 27679 (Damian's car,
   // Heartland Credit Union), reported Oct 27, 2026
   // + 388.21 (OnePay, reported by Zachariah Oct 29, 2026 — balance
   // $388.21, $29.85/mo due on the 1st, current; missed in the
-  // original build). This seed sum now MATCHES the $313,853.74
-  // debt-board total exactly (Cash App corrected Oct 29, 2026).
+  // original build). This seed sum MATCHES the debt-board total:
+  // $313,853.74 on the confirmed-figure basis, less the $351.50
+  // Afterpay mark-down = $313,502.24 (Oct 29, 2026).
   assert.equal(known.length, 21);
-  assert.equal(sum, 313853.74);
+  assert.equal(sum, 313502.24);
   // No null balances remain — all 21 confirmed (20 as of Oct 27, 2026, plus OnePay Oct 29, 2026).
   assert.deepEqual(
     SEED_DEBTS.filter((d) => d.balance == null).map((d) => d.creditor),
@@ -76,6 +81,13 @@ test('seed integrity: Snap Finance carries Snap\'s Oct 29, 2026 settlement propo
   assert.equal(debts.doNotPay(debts.normalizeDebt(snap)), true);
   assert.match(snap.notes, /FREQUENCY \(biweekly vs monthly\) NOT stated/);
   assert.match(snap.notes, /CLOSED account/);
+});
+
+test('seed integrity: Afterpay carries the Oct 29, 2026 marked-down remaining balance', () => {
+  const afterpay = SEED_DEBTS.find((d) => d.creditor === 'Afterpay');
+  assert.equal(afterpay.balance, 704.50); // $1,057.37 schedule − $352.87 paid Oct 28, 2026
+  assert.equal(afterpay.status, 'current');
+  assert.match(afterpay.notes, /nothing is due until Nov 8/);
 });
 
 test('seed integrity: Spotloan is active and current — NOT closed, NOT paid', () => {

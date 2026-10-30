@@ -31,10 +31,11 @@ test('totals: null balances excluded (never 0), paid debts excluded', () => {
   // Known balances: 4296.24 + 4813.73 + 2684.39 + 708.71 + 760.50 + 3120.66
   // + 13410 + 6500 + 1193 + 2366.90 + 2830.32 + 14349.26 + 5680.79
   // + 194958.53 (SunWest) + 268 (Credit One) + 482.50 (Verve)
-  // + 1056 (Afterpay) + 997 (Quantum card) + 25310 (camper)
+  // + 704.50 (Afterpay remaining after the Oct 28, 2026 payments —
+  // marked down Oct 29, 2026) + 997 (Quantum card) + 25310 (camper)
   // + 27679 (Damian's car, Heartland) + 388.21 (OnePay, Oct 29, 2026).
   // All 21 confirmed.
-  assert.equal(t.totalKnownBalance, 313853.74);
+  assert.equal(t.totalKnownBalance, 313502.24);
   assert.equal(t.confirmedBalances, 21);
   // Amount due now: 2038.30 + 4813.73 + 869.20 + 1265.57 + 93.98 + 646.47
   // + 1493.12 + 212.08 (Spotloan) + 324.23 + 114.00 (Quantum CU loans,
